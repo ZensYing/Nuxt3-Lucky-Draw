@@ -60,6 +60,7 @@ export default defineNuxtConfig({
     public: {
       API_BASE_URL: process.env.API_BASE_URL ,
       NEST_API_BASE_URL: process.env.NEST_API_BASE_URL ,
+      API_TC_BASE_URL: process.env.API_TC_BASE_URL
 
     },
   },

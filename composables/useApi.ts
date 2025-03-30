@@ -21,6 +21,16 @@ export const useApi = async <T>(endpoint: string, options: IAPIOption) => {
   const response = await axios<T>(baseUrl + endpoint, options);
   return response.data;
 };
+
+// TC.API.BASE.URL
+export const tcapi = async <T>(endpoint: string, options: IAPIOption) =>{
+  const baseUrl = useRuntimeConfig().public.API_TC_BASE_URL;
+  const response = await axios<T>(baseUrl + endpoint, options);
+  return response.data;
+}
+
+
+// NEST_API_BASE_URL
 export const useNestApi = async <T>(endpoint: string, options: IAPIOption) => {
   const nestBaseUrl = useRuntimeConfig().public.NEST_API_BASE_URL; // NestJS API
   const response = await axios<T>(nestBaseUrl + endpoint, options);
