@@ -1,5 +1,5 @@
 <template>
-  <nav class=" dark:text-white py-5  px-3 sticky top-0 z-[20]">
+  <nav class="dark:text-white py-5 px-3 sticky top-0 z-[20]">
     <div class="flex justify-between items-center">
       <div class="flex items-center space-x-3">
         <button v-if="!isHomePage" @click="goBack"
@@ -13,22 +13,41 @@
       </div>
       <div class="flex space-x-3">
         <div class="hidden md:flex space-x-6 items-center dark:bg-gray-700 px-4 py-2 dark:rounded-2xl">
-          <NuxtLink v-for="(item, index) in localizedMenuItems" :key="index" :to="item.to"
-            class="flex items-center space-x-1 text-gray-700 dark:text-white hover:text-green-600 transition-colors duration-300">
-            <Icon :icon="item.icon" class="w-5 h-5 dark:text-white" />
-            <span>{{ item.text }}</span>
-          </NuxtLink>
+          <div v-for="(item, index) in localizedMenuItems" :key="index" 
+               class="relative group">
+            <NuxtLink :to="!item.subItems ? item.to : '#'" 
+                    class="flex items-center space-x-1 text-gray-700 dark:text-white hover:text-green-600 transition-colors duration-300">
+              <Icon :icon="item.icon" class="w-5 h-5 dark:text-white" />
+              <span>{{ item.text }}</span>
+              <Icon v-if="item.subItems" icon="mdi:chevron-down" class="w-4 h-4 ml-1 transition-transform duration-300 group-hover:rotate-180" />
+            </NuxtLink>
+            
+            <!-- Modern submenu dropdown -->
+            <div v-if="item.subItems" 
+                 class="absolute hidden group-hover:block  py-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 z-50">
+              <div class="p-3">
+                <h3 class="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">{{ item.text }}</h3>
+                <div class="grid gap-1">
+                  <NuxtLink v-for="(subItem, subIndex) in item.subItems" :key="subIndex" :to="subItem.to"
+                      class="flex items-center p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <div class="flex items-center justify-center w-8 h-8 rounded-full bg-green-50 dark:bg-gray-700 mr-3">
+                      <Icon :icon="subItem.icon" class="w-4 h-4 text-green-600 dark:text-green-400" />
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-200">{{ subItem.text[locale as LocaleKey] }}</span>
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-
         <div class="flex space-x-3">
-
           <button @click="customToggleTheme" class="p-2 rounded focus:outline-none">
             <Icon :icon="theme === 'dark' ? 'mdi:weather-night' : 'mdi:weather-sunny'" class="w-6 h-6" />
           </button>
           <div class="relative" ref="dropdownContainer">
             <button @click="toggleDropdown"
-              class="flex items-center px-4 py-2  rounded-lg border border-dashed border-black dark:border-light  dark:text-white focus:outline-none">
+              class="flex items-center px-4 py-2 rounded-lg border border-dashed border-black dark:border-light dark:text-white focus:outline-none">
               {{ locale === 'en' ? 'English' : 'Khmer' }}
               <Icon icon="mdi:chevron-down" class="w-5 h-5 ml-2" />
             </button>
@@ -125,6 +144,48 @@ const menuItems = [
     icon: 'ix:about',
     text: { en: 'About', km: 'អំពីយើង' },
   },
+  {
+    to: '/tools',
+    icon: 'mdi:tools',
+    text: { en: 'Tools', km: 'ឧបករណ៍' },
+    subItems: [
+      {
+        to: '/tools/code-editor',
+        icon: 'vscode-icons:file-type-vscode',
+        text: { en: 'Code Editor', km: 'កម្មវិធីកែសម្រួលកូដ' },
+      },
+      {
+        to: '/tools/api-tester',
+        icon: 'simple-icons:postman',
+        text: { en: 'API Tester', km: 'ឧបករណ៍សាកល្បង API' },
+      },
+      {
+        to: '/tools/database-manager',
+        icon: 'mdi:database',
+        text: { en: 'Database Manager', km: 'កម្មវិធីគ្រប់គ្រងទិន្នន័យ' },
+      },
+      {
+        to: '/tools/design-tools',
+        icon: 'fa6-brands:figma',
+        text: { en: 'Design Tools', km: 'ឧបករណ៍រចនា' },
+      },
+      {
+        to: '/tools/ci-cd',
+        icon: 'mdi:devops',
+        text: { en: 'CI/CD Pipeline', km: 'បណ្ដាញ CI/CD' },
+      },
+      {
+        to: '/tools/performance-monitor',
+        icon: 'mdi:chart-timeline-variant',
+        text: { en: 'Performance Monitor', km: 'ឧបករណ៍ត្រួតពិនិត្យប្រសិទ្ធភាព' },
+      },
+      {
+        to: '/tools/version-control',
+        icon: 'mdi:git',
+        text: { en: 'Version Control', km: 'ការគ្រប់គ្រងកំណែ' },
+      },
+    ],
+  },
 ];
 
 // Create a computed array to dynamically return the correct language text
@@ -132,6 +193,7 @@ const localizedMenuItems = computed(() =>
   menuItems.map((item) => ({
     ...item,
     text: item.text[locale.value as LocaleKey], // Explicitly cast locale.value as a valid key
+    subItems: item.subItems // Keep the subItems in the processed result
   }))
 );
 const dropdownOpen = ref(false);
@@ -242,23 +304,24 @@ const logout = () => {
   width: 100%;
 }
 
-/* Mega Menu styling */
-.mega-menu {
-  display: none;
-  width: 950px;
+/* Modern dropdown animations */
+.group:hover .group-hover\:block {
+  animation: fadeIn 0.2s ease-in-out;
 }
 
-.group:hover .mega-menu {
-  display: block;
-  transition: all 0.3s ease-in-out;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Centering the mega menu on hover */
-.group .mega-menu {
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+/* Adding a subtle hover effect for submenu items */
+.group:hover .group-hover\:block a:hover {
+  transform: translateX(3px);
 }
 </style>

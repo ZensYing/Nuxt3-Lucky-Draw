@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container noselect  max-md:-top-8  -top-14" data-aos="fade-left">
+        <div class="container noselect  max-md:-top-8  -top-14">
             <div class="canvas">
                 <div v-for="n in 25" :key="n" :class="`tracker tr-${n}`"></div>
                 <div id="card">

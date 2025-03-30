@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
+  build: {
+    transpile: ['monaco-editor']
+  },
+  
   app: {
     head: {
       title: 'Soun Sorahta - Full Stack Developer',
@@ -44,6 +48,7 @@ export default defineNuxtConfig({
       ],  
     },
   },
+  
   css: ['~/assets/css/main.css', '~/assets/css/index.css'],
   postcss: {
     plugins: {
@@ -58,5 +63,6 @@ export default defineNuxtConfig({
 
     },
   },
+  
   plugins: ['~/plugins/iconify.js']
 });

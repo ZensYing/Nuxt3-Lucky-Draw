@@ -5,8 +5,6 @@
     <div class="absolute pointer-events-none">
       <div class="css-blurry-gradient-blue"></div>
       <div class="css-blurry-gradient-blue"></div>
-
-      <!-- <div class="css-blurry-gradient-green absolute left-1/2 -translate-x-0 inset-0 "></div> -->
     </div>
 
     <!-- Grid Line Background -->

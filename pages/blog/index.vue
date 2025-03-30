@@ -149,8 +149,9 @@ const nextPage = () => {
 
 </style> -->
 <!-- pages/maintenance.vue -->
+
 <template>
-    <BackgroundAnimationAnimate />
+  <BackgroundAnimationAnimate />
 
   <div class="min-h-screen bg-light dark:bg-dark flex items-center justify-center px-4">
     <div class="css-blurry-gradient-blue"></div>
@@ -161,67 +162,71 @@ const nextPage = () => {
         <svg class="gear-large" viewBox="0 0 100 100" ref="largeGear">
           <path
             d="M50 25c-13.8 0-25 11.2-25 25s11.2 25 25 25 25-11.2 25-25-11.2-25-25-25zm0 45c-11 0-20-9-20-20s9-20 20-20 20 9 20 20-9 20-20 20z"
-            fill="#3B82F6"
-          />
+            fill="#3B82F6" />
           <path
             d="M50 0v10c2.8 0 5 2.2 5 5s-2.2 5-5 5v10c11 0 20 9 20 20s-9 20-20 20v10c2.8 0 5 2.2 5 5s-2.2 5-5 5v10c27.6 0 50-22.4 50-50S77.6 0 50 0z"
-            fill="#2563EB"
-          />
+            fill="#2563EB" />
         </svg>
         <svg class="gear-small" viewBox="0 0 100 100" ref="smallGear">
           <path
             d="M50 35c-8.3 0-15 6.7-15 15s6.7 15 15 15 15-6.7 15-15-6.7-15-15-15zm0 25c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10z"
-            fill="#60A5FA"
-          />
+            fill="#60A5FA" />
           <path
             d="M50 20v5c1.7 0 3 1.3 3 3s-1.3 3-3 3v5c5.5 0 10 4.5 10 10s-4.5 10-10 10v5c1.7 0 3 1.3 3 3s-1.3 3-3 3v5c16.6 0 30-13.4 30-30S66.6 20 50 20z"
-            fill="#3B82F6"
-          />
+            fill="#3B82F6" />
         </svg>
       </div>
 
       <!-- Text Content -->
-      <h1 
-        class="text-4xl md:text-6xl font-bold text-blue-900 dark:text-light mb-6"
-        ref="title"
-      >
+      <h1 class="text-4xl md:text-6xl font-bold text-blue-900 dark:text-light mb-6" ref="title">
         Under Maintenance
       </h1>
-      
-      <p 
-        class="text-lg md:text-xl text-blue-700 dark:text-gray-400 mb-8 max-w-2xl mx-auto"
-        ref="description"
-      >
-        We're currently improving our website to serve you better. 
+
+      <p class="text-lg md:text-xl text-blue-700 dark:text-gray-400 mb-8 max-w-2xl mx-auto" ref="description">
+        We're currently improving our website to serve you better.
         Please check back soon!
       </p>
 
       <!-- Progress Bar -->
-      <div 
-        class="w-full max-w-md mx-auto bg-blue-200 rounded-full h-4 mb-8"
-        ref="progressContainer"
-      >
-        <div 
-          class="bg-blue-500 h-4 rounded-full transition-all duration-1000 ease-out"
-          ref="progressBar"
-        ></div>
+      <div class="w-full max-w-md mx-auto bg-blue-200 rounded-full h-4 mb-8" ref="progressContainer">
+        <div class="bg-blue-500 h-4 rounded-full transition-all duration-1000 ease-out" ref="progressBar"></div>
+      </div>
+     
+
+    
       </div>
 
-      <!-- Estimated Time -->
-      <!-- <p 
-        class="text-blue-600 text-lg"
-        ref="timeEstimate"
-      >
-        Estimated time remaining: <span class="font-semibold">20 minutes</span>
-      </p> -->
     </div>
-  </div>
+  
+
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
 import anime from 'animejs'
+import type { IResponse } from '~/types/api';
+import { useNestApi } from '~/composables/useApi';
+import type { BlogPost } from '~/types/blog';
+
+
+// Blog data state
+const blogs = ref<BlogPost[]>([])
+// const isLoading = ref(true)
+
+// Fetch blog data
+const fetchBlogs = async () => {
+  try {
+    const response = await useNestApi<BlogPost[]>('/blogs', { method: 'GET' })
+    blogs.value = response
+  } catch (error) {
+    console.error('Error fetching blogs:', error)
+  }
+}
+
+onMounted(() => {
+  fetchBlogs()
+})
 
 const gearsContainer = ref(null)
 const largeGear = ref(null)

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white  text-black dark:bg-dark dark:text-white ">
-    <IndexHero />
-    <PageIndexSkills />
+    <IndexHero-new />
+    <SkillsSection />
     <PageIndexProjectTabs />
     <!-- Timeline Section -->
 
