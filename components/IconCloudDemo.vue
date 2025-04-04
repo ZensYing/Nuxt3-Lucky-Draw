@@ -1,4 +1,3 @@
-// components/IconCloudDemo.vue
 <template>
   <div class="relative w-full h-[200px] flex items-center justify-center mb-10">
     <div class="animate-float">

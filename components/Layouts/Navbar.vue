@@ -7,8 +7,7 @@
           <Icon icon="ic:baseline-arrow-back" class="w-5 h-5" />
         </button>
         <NuxtLink to="/" class="flex items-center">
-          <!-- <img src="" alt="Logo" class="w-12" /> -->
-          <h1 class="btn-shine">{/} Soratha </h1>
+          <img src="/Logo-Expo.png" alt="Logo" class="w-12" />
         </NuxtLink>
       </div>
       <div class="flex space-x-3">
@@ -67,32 +66,11 @@
               </button>
             </div>
           </div>
-          <button type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example"
-            data-drawer-backdrop="true" aria-controls="drawer-example" class="md:hidden">
-            <Icon icon="ci:hamburger-md" class="w-6 h-6" />
-          </button>
         </div>
       </div>
     </div>
   </nav>
-  <transition appear enter-active-class="transition-opacity duration-500"
-    leave-active-class="transition-opacity duration-500">
-    <div v-if="showLightModeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-96 shadow-lg">
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-white">
-          Best viewed in dark mode!
-        </h3>
-        <p class="text-gray-600 dark:text-gray-300 mt-2">
-          For the best user experience, we recommend using dark mode.
-        </p>
-        <!-- Progress Bar -->
-        <div class="w-full bg-gray-300 rounded-full mt-4 dark:bg-gray-700">
-          <div class="h-2 bg-green-500 rounded-full" :style="{ width: `${progress}%` }"></div>
-        </div>
-      </div>
-    </div>
-  </transition>
-  <LayoutsDrawer :logout="logout" :openLoginDialog="openLoginDialog" />
+
 </template>
 
 <script setup lang="ts">
@@ -124,68 +102,12 @@ const switchLanguage = (newLocale: string) => {
 // Define the valid locales
 type LocaleKey = 'en' | 'km';
 const menuItems = [
-  {
-    to: '/',
-    icon: 'line-md:home',
-    text: { en: 'Home', km: 'ទំព័រដើម' },
-  },
-  {
-    to: '/blog',
-    icon: 'game-icons:read',
-    text: { en: 'Blog', km: 'ប្លុក' },
-  },
-  {
-    to: '/project',
-    icon: 'eos-icons:project-outlined',
-    text: { en: 'Project', km: 'គម្រោង' },
-  },
-  {
-    to: '/about',
-    icon: 'ix:about',
-    text: { en: 'About', km: 'អំពីយើង' },
-  },
-  {
-    to: '/tools',
-    icon: 'mdi:tools',
-    text: { en: 'Tools', km: 'ឧបករណ៍' },
-    subItems: [
-      {
-        to: '/tools/code-editor',
-        icon: 'vscode-icons:file-type-vscode',
-        text: { en: 'Code Editor', km: 'កម្មវិធីកែសម្រួលកូដ' },
-      },
-      {
-        to: '/tools/api-tester',
-        icon: 'simple-icons:postman',
-        text: { en: 'API Tester', km: 'ឧបករណ៍សាកល្បង API' },
-      },
-      {
-        to: '/tools/database-manager',
-        icon: 'mdi:database',
-        text: { en: 'Database Manager', km: 'កម្មវិធីគ្រប់គ្រងទិន្នន័យ' },
-      },
-      {
-        to: '/tools/design-tools',
-        icon: 'fa6-brands:figma',
-        text: { en: 'Design Tools', km: 'ឧបករណ៍រចនា' },
-      },
-      {
-        to: '/tools/ci-cd',
-        icon: 'mdi:devops',
-        text: { en: 'CI/CD Pipeline', km: 'បណ្ដាញ CI/CD' },
-      },
-      {
-        to: '/tools/performance-monitor',
-        icon: 'mdi:chart-timeline-variant',
-        text: { en: 'Performance Monitor', km: 'ឧបករណ៍ត្រួតពិនិត្យប្រសិទ្ធភាព' },
-      },
-      {
-        to: '/tools/version-control',
-        icon: 'mdi:git',
-        text: { en: 'Version Control', km: 'ការគ្រប់គ្រងកំណែ' },
-      },
-    ],
-  },
+  // {
+  //   to: '/',
+  //   icon: 'line-md:home',
+  //   text: { en: 'Home', km: 'ទំព័រដើម' },
+  // },
+  
 ];
 
 // Create a computed array to dynamically return the correct language text
@@ -210,27 +132,12 @@ const handleClickOutside = (event: MouseEvent) => {
     dropdownOpen.value = false;
   }
 };
-
-
-// 
-const showLightModeModal = ref(false);
-const progress = ref(0);
-
 const customToggleTheme = () => {
   if (theme.value === 'dark') {
     theme.value = 'light';
     localStorage.setItem('theme', 'light');
     document.documentElement.classList.remove('dark');
-    // Show light mode modal
-    showLightModeModal.value = true;
-    progress.value = 0;
-    const interval = setInterval(() => {
-      progress.value += 10;
-      if (progress.value >= 100) {
-        clearInterval(interval);
-        showLightModeModal.value = false;
-      }
-    }, 200); // Progress bar updates every 200ms
+    
   } else {
     theme.value = 'dark';
     localStorage.setItem('theme', 'dark');

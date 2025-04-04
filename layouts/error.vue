@@ -6,37 +6,37 @@
         <div class="w-full max-w-md mx-auto mb-8">
           <svg viewBox="0 0 400 200" class="w-full">
             <text x="50%" y="50%" dy=".35em" text-anchor="middle" class="text-9xl font-bold fill-current dark:text-white text-black stroke-current dark:stroke-gray-800 stroke-2">404</text>
-          
+            <!-- Adding animated circles -->
+            <circle cx="150" cy="100" r="10" class="fill-current text-gray-300 dark:text-gray-700" />
+            <circle cx="200" cy="100" r="10" class="fill-current text-gray-300 dark:text-gray-700" />
+            <circle cx="250" cy="100" r="10" class="fill-current text-gray-300 dark:text-gray-700" />
           </svg>
         </div>
 
         <!-- Error Message -->
         <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-          {{ $t('pageNotFound.title') }}
+          {{ $t('error.pageNotFound.title') }}
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
-          {{ $t('pageNotFound.message') }}
+          {{ $t('error.pageNotFound.message') }}
         </p>
 
         <!-- Path Info -->
         <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg inline-block">
           <p class="text-gray-500 dark:text-gray-400 font-mono">
-            <span class="text-green-600 dark:text-green-400">{{ $t('pageNotFound.path') }}:</span> {{ currentPath }}
+            <span class="text-green-600 dark:text-green-400">{{ $t('error.pageNotFound.path') }}:</span> {{ currentPath }}
           </p>
         </div>
-
-        <!-- Suggestions -->
-       
 
         <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
           <NuxtLink to="/" class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-300 flex items-center">
-            <Icon icon="line-md:home" class="w-5 h-5 mr-2" />
-            {{ $t('pageNotFound.goHome') }}
+            <Icon name="line-md:home" class="w-5 h-5 mr-2" />
+            {{ $t('error.pageNotFound.goHome') }}
           </NuxtLink>
           <button @click="goBack" class="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg transition-colors duration-300 flex items-center">
-            <Icon icon="ic:baseline-arrow-back" class="w-5 h-5 mr-2" />
-            {{ $t('pageNotFound.goBack') }}
+            <Icon name="ic:baseline-arrow-back" class="w-5 h-5 mr-2" />
+            {{ $t('error.pageNotFound.goBack') }}
           </button>
         </div>
       </div>
@@ -51,18 +51,37 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { Icon } from '@iconify/vue';
+import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
-const route = useRoute();
+const { t, locale } = useI18n({
+  messages: {
+    en: {
+      error: {
+        pageNotFound: {
+          title: 'Page Not Found',
+          message: 'The page you are looking for doesn\'t exist or has been moved.',
+          path: 'Path',
+          goHome: 'Go to Homepage',
+          goBack: 'Go Back',
+          phrases: {
+            lost: 'Looks like you got lost in the void!',
+            void: 'This page has vanished into the digital ether.',
+            explore: 'Nothing to see here, but plenty elsewhere!',
+            adventure: 'Every 404 is just the start of a new adventure.',
+            error: 'Even the best websites have a few missing pages.'
+          }
+        }
+      }
+    }
+  },
+  fallbackLocale: 'en'
+});
+
 const router = useRouter();
 
 // Current path
-const currentPath = computed(() => route.path);
-
-
+const currentPath = computed(() => window.location.pathname);
 
 // Go back function
 const goBack = () => {
@@ -71,11 +90,11 @@ const goBack = () => {
 
 // Random phrases animation
 const phrases = computed(() => [
-  t('pageNotFound.phrases.lost'),
-  t('pageNotFound.phrases.void'),
-  t('pageNotFound.phrases.explore'),
-  t('pageNotFound.phrases.adventure'),
-  t('pageNotFound.phrases.error')
+  t('error.pageNotFound.phrases.lost'),
+  t('error.pageNotFound.phrases.void'),
+  t('error.pageNotFound.phrases.explore'),
+  t('error.pageNotFound.phrases.adventure'),
+  t('error.pageNotFound.phrases.error')
 ]);
 
 const randomPhrase = ref('');

@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['monaco-editor']
   },
-  
+  ssr:false,
   app: {
     head: {
       title: 'Soun Sorahta - Full Stack Developer',
@@ -55,6 +55,12 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+  
+  vite: {
+    optimizeDeps: {
+      include: ['leaflet']
+    }
   },
   runtimeConfig: {
     public: {
