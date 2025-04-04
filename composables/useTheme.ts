@@ -1,14 +1,17 @@
+// composables/useTheme.ts
 import { ref, onMounted } from 'vue';
 
 export default function useTheme() {
+  // Initialize with 'light' as default
   const theme = ref('light');
   
   const setTheme = (newTheme: string) => {
     theme.value = newTheme;
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(newTheme);
-
-    if (typeof window !== 'undefined' && window.localStorage) {
+    
+    // Only manipulate DOM elements when in browser context
+    if (process.client) {
+      document.documentElement.classList.remove('light', 'dark');
+      document.documentElement.classList.add(newTheme);
       localStorage.setItem('theme', newTheme);
     }
   };
@@ -17,14 +20,16 @@ export default function useTheme() {
     setTheme(theme.value === 'light' ? 'dark' : 'light');
   };
 
-  // Initialize theme only for client-side updates
+  // Initialize theme from localStorage only for client-side
   onMounted(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    // Get saved theme or fallback to 'light'
+    const savedTheme = localStorage.getItem('theme') ?? 'light';
     setTheme(savedTheme);
   });
 
   return {
     theme,
     toggleTheme,
+    setTheme, // Exposing setTheme can be useful
   };
 }
