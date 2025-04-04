@@ -7,8 +7,8 @@
        <div>
         <img src="/Logo-Expo.png" alt="" class="w-72 mx-auto mb-4" /> 
        </div>
-      <div class="mb-8 text-center bg-white p-2 rounded-3xl" v-motion :initial="{ opacity: 0, y: -20 }" :enter="{ opacity: 1, y: 0 }">
-        <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+      <div class="mb-8 text-center bg-gradient-to-r from-blue-600 to-pink-600 p-2 rounded-2xl" v-motion :initial="{ opacity: 0, y: -20 }" :enter="{ opacity: 1, y: 0 }">
+        <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text text-white">
           {{ locale === 'en' ? 'Tech & Auto Expo 2025' : 'ពិព័រណ៍បច្ចេកវិទ្យា & យានយន្ត ២០២៥' }}
         </h1>
         <div class="mt-2 flex justify-center space-x-2">
@@ -39,10 +39,10 @@
             
             <form @submit.prevent="submitForm" class="p-6 space-y-5">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">ឈ្មោះ (Name)</label>
+                <label class="block text-sm  font-semibold text-blue-500 mb-1">ឈ្មោះ (Name)</label>
                 <div class="relative">
-                  <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                    <Icon icon="heroicons:user" data-icon="heroicons:user"></Icon>
+                  <span class="absolute inset-y-0 font-bold text-blue-500 left-0 flex items-center pl-3 ">
+                    <Icon icon="heroicons:user" class="text-blue-500 font-bol" ></Icon>
                   </span>
                   <input 
                     v-model="form.name" 
@@ -54,10 +54,10 @@
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">លេខទូរស័ព្ទ (Phone Number)</label>
+                <label class="block text-sm  font-semibold text-blue-500 mb-1">លេខទូរស័ព្ទ (Phone Number)</label>
                 <div class="relative">
                   <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                    <Icon class="iconify" icon="heroicons:phone"></Icon>
+                    <Icon class="iconify text-blue-500 font-bol" icon="heroicons:phone"></Icon>
                   </span>
                   <input 
                     v-model="form.phone" 
@@ -69,10 +69,10 @@
               </div>
 
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">អ៊ីមែល (Email)</label>
+                <label class="block text-sm font-semibold text-blue-500 mb-1">អ៊ីមែល (Email)</label>
                 <div class="relative">
                   <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                    <Icon class="iconify" icon="heroicons:envelope"></Icon>
+                    <Icon class="iconify  text-blue-500 font-bold" icon="heroicons:envelope"></Icon>
                   </span>
                   <input 
                     v-model="form.email" 
@@ -213,7 +213,7 @@ import { Icon } from '@iconify/vue';
 const {t, locale} = useI18n();
 // Constant coordinates for Chip Mong 271 Mega Mall
 const CENTER_COORDS = { lat: 11.5249, lng: 104.9237 }
-const RADIUS_METERS = 250
+const RADIUS_METERS = 9000
 
 // Form state
 const form = ref({ name: '', phone: '', email: '' })
@@ -278,7 +278,7 @@ if (process.client) {
       link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
       document.head.appendChild(link)
     }
-
+   
     // Wait for CSS to load
     await new Promise(resolve => setTimeout(resolve, 100))
 
@@ -389,7 +389,6 @@ return new Promise(resolve => {
           })
         }).addTo(map)
       }
-
       isCheckingLocation.value = false
       locationAccessDenied.value = false
       

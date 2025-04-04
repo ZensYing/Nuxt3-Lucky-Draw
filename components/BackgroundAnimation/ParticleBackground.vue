@@ -56,7 +56,7 @@ const initCanvas = () => {
   window.addEventListener('resize', updateSize)
 
   // Initialize particles - fewer for cleaner look
-  const particleCount = 80
+  const particleCount = 50
   for (let i = 0; i < particleCount; i++) {
     particles.value.push({
       x: Math.random() * window.innerWidth,
