@@ -1,7 +1,6 @@
-// components/ParticleBackground.vue
 <template>
   <div class="fixed inset-0 -z-10">
-    <canvas ref="canvasRef" class="w-full h-full bg-[#070B1F]"></canvas>
+    <canvas ref="canvasRef" class="w-full h-full bg-[#373a45]"></canvas>
   </div>
 </template>
 

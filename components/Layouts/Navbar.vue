@@ -2,13 +2,13 @@
   <nav class="dark:text-white py-5 px-3 sticky top-0 z-[20]">
     <div class="flex justify-between items-center">
       <div class="flex items-center space-x-3">
-        <button v-if="!isHomePage" @click="goBack"
+        <!-- <button v-if="!isHomePage" @click="goBack"
           class="flex items-center space-x-1 text-gray-700 dark:text-light hover:text-green-600 transition-colors duration-300">
           <Icon icon="ic:baseline-arrow-back" class="w-5 h-5" />
         </button>
         <NuxtLink to="/" class="flex items-center">
-          <img src="/Logo-Expo.png" alt="Logo" class="w-12" />
-        </NuxtLink>
+          <img src="/Logo-Expo.png" alt="Logo" class="w-28" />
+        </NuxtLink> -->
       </div>
       <div class="flex space-x-3">
         <div class="hidden md:flex space-x-6 items-center dark:bg-gray-700 px-4 py-2 dark:rounded-2xl">
@@ -41,17 +41,17 @@
         </div>
 
         <div class="flex space-x-3">
-          <button @click="customToggleTheme" class="p-2 rounded focus:outline-none">
+          <!-- <button @click="customToggleTheme" class="p-2 rounded focus:outline-none">
             <Icon :icon="theme === 'dark' ? 'mdi:weather-night' : 'mdi:weather-sunny'" class="w-6 h-6" />
-          </button>
+          </button> -->
           <div class="relative" ref="dropdownContainer">
             <button @click="toggleDropdown"
-              class="flex items-center px-4 py-2 rounded-lg border border-dashed border-black dark:border-light dark:text-white focus:outline-none">
+              class="flex items-center px-4 py-2 rounded-lg border border-dashed  border-light text-white focus:outline-none">
               {{ locale === 'en' ? 'English' : 'Khmer' }}
               <Icon icon="mdi:chevron-down" class="w-5 h-5 ml-2" />
             </button>
             <div v-if="dropdownOpen"
-              class="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+              class="absolute right-0 mt-2 w-40 bg-white border  rounded-lg shadow-lg  border-gray-600">
               <button @click="switchLanguage('en')" :class="[
                 'block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600',
                 locale === 'en' ? 'bg-gray-100 dark:bg-gray-600' : ''

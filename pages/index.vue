@@ -1,10 +1,15 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
+  <BackgroundAnimationParticleBackground />
+  <div class="min-h-screen ">
+    <div class="container mx-auto px-4 pb-2 max-w-4xl">
       <!-- Header with animated title -->
-      <div class="mb-8 text-center" v-motion :initial="{ opacity: 0, y: -20 }" :enter="{ opacity: 1, y: 0 }">
+      <!-- image -->
+       <div>
+        <img src="/Logo-Expo.png" alt="" class="w-72 mx-auto mb-4" /> 
+       </div>
+      <div class="mb-8 text-center bg-white p-2 rounded-3xl" v-motion :initial="{ opacity: 0, y: -20 }" :enter="{ opacity: 1, y: 0 }">
         <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-          {{ locale === 'en' ? 'Technology & Automotive Exhibition 2025' : 'ពិព័រណ៍បច្ចេកវិទ្យា & យានយន្ត ២០២៥' }}
+          {{ locale === 'en' ? 'Tech & Auto Expo 2025' : 'ពិព័រណ៍បច្ចេកវិទ្យា & យានយន្ត ២០២៥' }}
         </h1>
         <div class="mt-2 flex justify-center space-x-2">
           <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
@@ -114,7 +119,7 @@
                 <div class="text-sm text-gray-600 mb-1">លេខឆ្នោតចាប់រង្វាន់របស់អ្នក៖</div>
                 <div class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 tracking-wider mb-2 flex justify-center">
                   <div class="flex space-x-2">
-                    <span v-for="(digit, index) in ticketCode" :key="index" class="inline-block w-10 h-14 bg-white border border-gray-200 rounded-lg flex items-center justify-center shadow-sm">
+                    <span v-for="(digit, index) in ticketCode" :key="index" class="inline-block text-blue-500 w-10 h-14 bg-white border border-gray-200 rounded-lg flex items-center justify-center shadow-sm">
                       {{ digit }}
                     </span>
                   </div>
@@ -164,7 +169,7 @@
         <div class="md:col-span-3">
           <!-- Map -->
           <div 
-            class="rounded-xl overflow-hidden shadow-lg border border-gray-100"
+            class="rounded-xl overflow-hidden shadow-lg border border-gray-100 bg-white"
             v-motion :initial="{ opacity: 0, x: 20 }" :enter="{ opacity: 1, x: 0, transition: { delay: 200 } }"
           >
             <div class="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4">
@@ -190,7 +195,7 @@
               <div class="flex items-center text-sm text-gray-600">
                 <Icon name="iconify mr-2" data-icon="heroicons:information-circle"></Icon>
                 {{ locale === 'en' ? 'Service area:' : 'តំបន់បម្រើសេវា:' }} 
-                <span class="text-blue-600 font-medium ml-1">រង្វង់ 250ម៉ែត្រ ជុំវិញ Chip Mong 271 Mega Mall</span>
+                <span class="text-blue-600 font-medium ml-1">រង្វង់ជុំវិញ Chip Mong 271 Mega Mall</span>
               </div>
             </div>
           </div>
@@ -208,7 +213,7 @@ import { Icon } from '@iconify/vue';
 const {t, locale} = useI18n();
 // Constant coordinates for Chip Mong 271 Mega Mall
 const CENTER_COORDS = { lat: 11.5249, lng: 104.9237 }
-const RADIUS_METERS = 9000
+const RADIUS_METERS = 250
 
 // Form state
 const form = ref({ name: '', phone: '', email: '' })

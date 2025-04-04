@@ -1,7 +1,7 @@
 import { ref, onMounted } from 'vue';
 
 export default function useTheme() {
-  const theme = ref('dark');
+  const theme = ref('light');
   
   const setTheme = (newTheme: string) => {
     theme.value = newTheme;
@@ -14,12 +14,12 @@ export default function useTheme() {
   };
 
   const toggleTheme = () => {
-    setTheme(theme.value === 'dark' ? 'light' : 'dark');
+    setTheme(theme.value === 'light' ? 'dark' : 'light');
   };
 
   // Initialize theme only for client-side updates
   onMounted(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
   });
 
