@@ -434,48 +434,67 @@ const checkUserLocation = (initialLoad = false) => {
 const submitForm = async () => {
   const isInRange = await checkUserLocation()
 
-  if (isInRange) {
-    // Generate ticket code
-    ticketCode.value = generateTicketCode()
+  if (!isInRange) {
+    showForm.value = false
+    showTicket.value = false
+    showOutOfRangeMessage.value = true
 
-    // Store submission
+    // Show proper message depending on access
+    Swal.fire({
+      icon: locationAccessDenied.value ? 'warning' : 'info',
+      title: locationAccessDenied.value ? 'ការអនុញ្ញាតទីតាំង!' : 'ទីតាំងខុស!',
+      text: locationAccessDenied.value
+        ? 'សូមអនុញ្ញាតឱ្យប្រើប្រាស់ទីតាំងរបស់អ្នក ដើម្បីចុះឈ្មោះ'
+        : 'អ្នកមិនស្ថិតនៅក្នុងតំបន់ដែលអាចចុះឈ្មោះបានទេ។ សូមទៅកាន់ Chip Mong 271 Mega Mall។',
+      confirmButtonText: 'យល់ព្រម'
+    })
+
+    return
+  }
+
+  try {
+    // 🔥 Submit data to backend
+    const response = await $fetch('/api/register', {
+      method: 'POST',
+      body: {
+        name: form.value.name,
+        phone: form.value.phone
+      }
+    })
+
+    if (response.error) {
+      throw new Error(response.error)
+    }
+
+    // ✅ Set ticket code from backend
+    ticketCode.value = response.data.ticket_code
+
+    // Optional: store locally
     userSubmissions.value.push({
       ...form.value,
       ticketCode: ticketCode.value,
       timestamp: new Date().toISOString()
     })
 
-    // Show success message
+    // UI state
     showForm.value = false
     showTicket.value = true
     showOutOfRangeMessage.value = false
 
-      // 👉 Automatically open the Invoice modal
-  showInvoice()
-  } else {
-    // Show out of range message
-    showForm.value = false
-    showTicket.value = false
-    showOutOfRangeMessage.value = true
+    // Show invoice
+    showInvoice()
 
-    // Alert with appropriate message
-    if (locationAccessDenied.value) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'ការអនុញ្ញាតទីតាំង!',
-        text: 'សូមអនុញ្ញាតឱ្យប្រើប្រាស់ទីតាំងរបស់អ្នក ដើម្បីចុះឈ្មោះ',
-        confirmButtonText: 'យល់ព្រម'
-      })
-    } else {
-      Swal.fire({
-        icon: 'info',
-        title: 'ទីតាំងខុស!',
-        text: 'អ្នកមិនស្ថិតនៅក្នុងតំបន់ដែលអាចចុះឈ្មោះបានទេ។ សូមទៅកាន់ Chip Mong 271 Mega Mall។',
-        confirmButtonText: 'យល់ព្រម'
-      })
-    }
+  } catch (error) {
+    console.error('Registration failed:', error)
+    Swal.fire({
+      icon: 'error',
+      title: 'បរាជ័យ',
+      text: error?.message || 'មានបញ្ហាកើតឡើងក្នុងការចុះឈ្មោះ។ សូមព្យាយាមម្តងទៀត។',
+      confirmButtonText: 'យល់ព្រម'
+    })
   }
 }
+
 
 // Reset form
 const resetForm = () => {

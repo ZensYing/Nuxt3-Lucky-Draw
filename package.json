@@ -8,7 +8,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test:load": "artillery run load-test.yml"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
@@ -26,11 +27,13 @@
     "gauge": "^5.0.2",
     "gsap": "^3.12.5",
     "html2canvas": "^1.4.1",
+    "ioredis": "^5.6.0",
     "leaflet": "^1.9.4",
     "monaco-editor": "^0.52.2",
     "nuxt": "^3.12.4",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^5.1.91",
+    "pg": "^8.14.1",
     "sweetalert2": "^11.14.5",
     "swiper": "11.0.7",
     "vue": "latest",
@@ -41,7 +44,9 @@
   "devDependencies": {
     "@types/animejs": "^3.1.12",
     "@types/formidable": "^3.4.5",
+    "@types/pg": "^8.11.11",
     "@types/prismjs": "^1.26.5",
+    "artillery": "^2.0.22",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6",
