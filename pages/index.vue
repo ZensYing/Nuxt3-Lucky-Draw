@@ -69,13 +69,17 @@
 
               <button type="submit"
                 class="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 focus:ring-4 focus:ring-blue-300 transition-all flex items-center justify-center"
-                :disabled="isCheckingLocation || !isFormValid">
-                <span v-if="isCheckingLocation" class="flex items-center">
-                  <i class="iconify animate-spin mr-2" data-icon="heroicons:arrow-path"></i>
+                :disabled="isSubmitting || isCheckingLocation || !isFormValid">
+                <span v-if="isSubmitting" class="flex items-center">
+                  <Icon icon="heroicons:arrow-path" class="animate-spin mr-2" />
+                  កំពុងដំណើរការ...
+                </span>
+                <span v-else-if="isCheckingLocation" class="flex items-center">
+                  <Icon icon="heroicons:arrow-path" class="animate-spin mr-2" />
                   កំពុងពិនិត្យទីតាំង...
                 </span>
                 <span v-else class="flex items-center">
-                  <i class="iconify mr-2" data-icon="heroicons:paper-airplane"></i>
+                  <Icon icon="heroicons:paper-airplane" class="mr-2" />
                   ដាក់ស្នើ
                 </span>
               </button>
@@ -115,7 +119,8 @@
                   <i class="iconify mr-1" data-icon="heroicons:arrow-left"></i>
                   {{ locale === 'en' ? 'Go Back' : 'ត្រឡប់ក្រោយ' }}
                 </button>
-                <button @click="showInvoice" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center">
+                <button @click="showInvoice"
+                  class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center">
                   <i class="iconify mr-1" data-icon="heroicons:document-text"></i>
                   {{ locale === 'en' ? 'View Ticket' : 'មើលសំបុត្រ' }}
                 </button>
@@ -182,14 +187,9 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Invoice Modal Component -->
-  <Invoice 
-    :userData="form" 
-    :ticketCode="ticketCode" 
-    :visible="showInvoiceModal"
-    @close="hideInvoice"
-  />
+  <Invoice :userData="form" :ticketCode="ticketCode" :visible="showInvoiceModal" @close="hideInvoice" />
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue'
@@ -213,6 +213,7 @@ const showTicket = ref(false)
 const showOutOfRangeMessage = ref(false)
 const isCheckingLocation = ref(false)
 const ticketCode = ref('')
+const isSubmitting = ref(false)
 const userSubmissions = ref([])
 const locationAccessDenied = ref(false)
 
@@ -433,6 +434,7 @@ const checkUserLocation = (initialLoad = false) => {
 // Submit Form
 const submitForm = async () => {
   const isInRange = await checkUserLocation()
+  isSubmitting.value = true;
 
   if (!isInRange) {
     showForm.value = false
@@ -492,6 +494,8 @@ const submitForm = async () => {
       text: error?.message || 'មានបញ្ហាកើតឡើងក្នុងការចុះឈ្មោះ។ សូមព្យាយាមម្តងទៀត។',
       confirmButtonText: 'យល់ព្រម'
     })
+  }finally {
+    isSubmitting.value = false; // Reset loading state whether successful or not
   }
 }
 
