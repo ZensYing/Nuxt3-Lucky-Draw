@@ -12,32 +12,7 @@
       </div>
       <div class="flex space-x-3">
         <div class="hidden md:flex space-x-6 items-center dark:bg-gray-700 px-4 py-2 dark:rounded-2xl">
-          <div v-for="(item, index) in localizedMenuItems" :key="index" 
-               class="relative group">
-            <NuxtLink :to="!item.subItems ? item.to : '#'" 
-                    class="flex items-center space-x-1 text-gray-700 dark:text-white hover:text-green-600 transition-colors duration-300">
-              <Icon :icon="item.icon" class="w-5 h-5 dark:text-white" />
-              <span>{{ item.text }}</span>
-              <Icon v-if="item.subItems" icon="mdi:chevron-down" class="w-4 h-4 ml-1 transition-transform duration-300 group-hover:rotate-180" />
-            </NuxtLink>
-            
-            <!-- Modern submenu dropdown -->
-            <div v-if="item.subItems" 
-                 class="absolute hidden group-hover:block  py-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300 z-50">
-              <div class="p-3">
-                <h3 class="font-medium text-sm text-gray-500 dark:text-gray-400 mb-2">{{ item.text }}</h3>
-                <div class="grid gap-1">
-                  <NuxtLink v-for="(subItem, subIndex) in item.subItems" :key="subIndex" :to="subItem.to"
-                      class="flex items-center p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
-                    <div class="flex items-center justify-center w-8 h-8 rounded-full bg-green-50 dark:bg-gray-700 mr-3">
-                      <Icon :icon="subItem.icon" class="w-4 h-4 text-green-600 dark:text-green-400" />
-                    </div>
-                    <span class="text-gray-700 dark:text-gray-200">{{ subItem.text[locale as LocaleKey] }}</span>
-                  </NuxtLink>
-                </div>
-              </div>
-            </div>
-          </div>
+        
         </div>
 
         <div class="flex space-x-3">
@@ -62,7 +37,7 @@
                 'block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600',
                 locale === 'km' ? 'bg-gray-100 dark:bg-gray-600' : ''
               ]">
-                Khmer
+                Khmer <Icon icon="twemoji:flag-cambodia" width="36" height="36" />
               </button>
             </div>
           </div>
@@ -76,7 +51,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { useRouter, useRoute } from 'vue-router';
-import LayoutsDrawer from '~/components/Layouts/Drawer.vue';
 import useTheme from '~/composables/useTheme';
 import { useI18n } from 'vue-i18n';
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
@@ -101,23 +75,10 @@ const switchLanguage = (newLocale: string) => {
 };
 // Define the valid locales
 type LocaleKey = 'en' | 'km';
-const menuItems = [
-  // {
-  //   to: '/',
-  //   icon: 'line-md:home',
-  //   text: { en: 'Home', km: 'ទំព័រដើម' },
-  // },
-  
-];
+
 
 // Create a computed array to dynamically return the correct language text
-const localizedMenuItems = computed(() =>
-  menuItems.map((item) => ({
-    ...item,
-    text: item.text[locale.value as LocaleKey], // Explicitly cast locale.value as a valid key
-    subItems: item.subItems // Keep the subItems in the processed result
-  }))
-);
+
 const dropdownOpen = ref(false);
 const dropdownContainer = ref<HTMLElement | null>(null);
 
