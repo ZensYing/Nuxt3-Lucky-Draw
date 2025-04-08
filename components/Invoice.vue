@@ -2,11 +2,11 @@
   <div class="invoice-wrapper" v-if="visible" v-motion-fade-visible-once>
     <div class="invoice-container" ref="invoiceContainer">
       <!-- Company Header -->
-      <div class="header-section">
+      <div class="header-section bg-gradient-to-r from-blue-600 to-pink-600">
         <div class="company-info">
           <img src="/Logo-Expo.png" alt="Expo Logo" class="company-logo" />
           <div class="company-details">
-            <h1 class="company-name">EXPO</h1>
+            <h1 class="company-name text-white">Tech & Auto Expo</h1>
             <p class="company-tagline">{{ locale === 'en' ? 'Official Registration' : 'ការចុះឈ្មោះផ្លូវការ' }}</p>
           </div>
         </div>
@@ -50,34 +50,19 @@
               <div class="info-value">{{ userData.phone }}</div>
             </div>
             
-            <div class="info-row" v-if="userData.email">
+            <!-- <div class="info-row" v-if="userData.email">
               <div class="info-label">{{ locale === 'en' ? 'Email' : 'អ៊ីមែល' }}</div>
               <div class="info-value">{{ userData.email }}</div>
-            </div>
-            
-            <div class="info-row">
-              <div class="info-label">{{ locale === 'en' ? 'Reg. ID' : 'លេខចុះឈ្មោះ' }}</div>
-              <div class="info-value">#{{ generateRegId() }}</div>
-            </div>
+            </div> -->
           </div>
         </div>
-
-        <!-- Verification Section -->
-        <div class="verification-section">
-          <div class="qr-code">
-            <div class="qr-placeholder">
-              <div class="qr-inner"></div>
-            </div>
-          </div>
-          <div class="verification-text">
-            <p>{{ locale === 'en' ? 'Please keep this receipt for verification at entry.' : 'សូមរក្សាទុកបង្កាន់ដៃនេះសម្រាប់ការផ្ទៀងផ្ទាត់នៅពេលចូល។' }}</p>
-          </div>
-        </div>
-
         <!-- Branding Footer -->
         <div class="invoice-footer">
+          <p class="font-bold text-blue-500 text-md">{{ locale === 'en' ? 'Please keep this receipt for verification at entry.' : 'សូមរក្សាទុកបង្កាន់ដៃនេះសម្រាប់ការផ្ទៀងផ្ទាត់' }}</p>
+
           <div class="thank-you">{{ locale === 'en' ? 'Thank you for registering!' : 'អរគុណសម្រាប់ការចុះឈ្មោះ!' }}</div>
-          <div class="company-website">www.expo-event.com</div>
+
+          <!-- <div class="company-website">www.expo-event.com</div> -->
         </div>
       </div>
 
@@ -292,7 +277,7 @@ watch(() => props.visible, (visible) => {
   background-color: white;
   border-radius: 10px;
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   position: relative;
@@ -303,7 +288,7 @@ watch(() => props.visible, (visible) => {
 /* Company Header Section */
 .header-section {
   background-color: #f8f9fa;
-  padding: 24px;
+  padding: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -334,14 +319,12 @@ watch(() => props.visible, (visible) => {
 .company-name {
   font-size: 22px;
   font-weight: 800;
-  color: #0b79e8;
   margin: 0;
-  letter-spacing: 1px;
 }
 
 .company-tagline {
   font-size: 12px;
-  color: #6c757d;
+  color: #ced2d5;
   margin: 0;
 }
 
@@ -368,8 +351,8 @@ watch(() => props.visible, (visible) => {
 
 .receipt-title h2 {
   font-size: 18px;
-  font-weight: 600;
-  color: #1a365d;
+  font-weight: 800;
+  color: #3f3e3c;
   margin: 0;
 }
 
@@ -528,7 +511,8 @@ watch(() => props.visible, (visible) => {
 }
 
 .verification-text p {
-  font-size: 12px;
+  font-size: 15px;
+  text-align: center;
   color: #007bff;
   font-weight: 600;
   margin: 0;

@@ -56,7 +56,7 @@
                 </div>
               </div>
 
-              <div>
+              <!-- <div>
                 <label class="block text-sm font-semibold text-blue-500 mb-1">អ៊ីមែល (Email)</label>
                 <div class="relative">
                   <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
@@ -65,7 +65,7 @@
                   <input v-model="form.email" type="email"
                     class="pl-10 w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" />
                 </div>
-              </div>
+              </div> -->
 
               <button type="submit"
                 class="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 focus:ring-4 focus:ring-blue-300 transition-all flex items-center justify-center"
@@ -205,7 +205,7 @@ const RADIUS_METERS = 9000
 const showInvoiceModal = ref(false)
 
 // Form state
-const form = ref({ name: '', phone: '', email: '' })
+const form = ref({ name: '', phone: '' })
 
 // UI state
 const showForm = ref(true)
@@ -479,7 +479,7 @@ const submitForm = async () => {
 
 // Reset form
 const resetForm = () => {
-  form.value = { name: '', phone: '', email: '' }
+  form.value = { name: '', phone: '' }
   showForm.value = true
   showTicket.value = false
   showOutOfRangeMessage.value = false
